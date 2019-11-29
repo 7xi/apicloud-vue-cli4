@@ -12,8 +12,8 @@ apicloud下app开发脚手架
 ### Download and Project setup
 
 ``` bash
-git clone https://github.com/cytle/apicloud_app.git
-cd apicloud_app
+git clone https://github.com/7xi/apicloud-vue-cli4.git
+cd apicloud-vue-cli4
 npm install 或 yarn install
 ```
 
