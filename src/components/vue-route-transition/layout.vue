@@ -1,0 +1,49 @@
+<template>
+  <div class="vue-route-transition-wrapper">
+    <slot name="header"></slot>
+    <div class="vue-route-transition-content" :id="cId">
+      <slot></slot>
+    </div>
+    <slot name="footer"></slot>
+    <slot name="aside"></slot>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+@Component({
+  name: 'router-layout',
+})
+export default class routerLayout extends Vue {
+  @Prop({ default: '', type: String }) private id!: any;
+  cId: any = '';
+  private async mounted() {
+    this.cId = this.id || (this.$route.path && this.$route.path.replace(/\//g, '_')) || '_null_';
+  }
+}
+</script>
+
+<style lang="less" scoped>
+body,
+html {
+  height: 100%;
+  height: 100%;
+}
+.vue-route-transition-wrapper {
+  background: #fff;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .vue-route-transition-content {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+}
+</style>
