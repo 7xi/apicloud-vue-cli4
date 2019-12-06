@@ -151,6 +151,15 @@ api.addEventListener({
     alert('应用回到后台');
 });
 ```
+##### 3.IOS端返回上一页页面切换无法停留
 
-该方案已经有上架到安卓和ios的APP项目了，而且相较于官方写法，速度更快，兼容性更好，对ui的还原度支持会比较好。
+### **开始一个app**
+##### 1.修改src\main.ts中Vue.prototype.appGlobal状态改为true
+##### 2.修改public\config.xml中id="A0000000000000"中的id为自己实际appid，否则无法同步代码代码
+##### 3.运行npm run build打包代码
+##### 4.将打包好的代码（dist文件夹下）文件复制到apicloud项目文件夹下
+
+![](http://img.somaqu.com/1575602231032.gif)
+
+该脚手架已经有上架到安卓和ios的APP项目了，而且相较于官方写法，速度更快，兼容性更好，对ui的还原度支持会比较好。
 赶紧clone下来试一下吧，如果对你有帮助，欢迎star~；如果有疑问，可以提lssues或加我QQ 669476900一起讨论！

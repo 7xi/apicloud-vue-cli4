@@ -1,0 +1,7 @@
+{
+    "name": "root",
+    "url": "widget://index.html",
+    "bgColor": "#fff",
+    "title": "首页",
+    "hideNavigationBar": true
+}
