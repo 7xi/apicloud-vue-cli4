@@ -1,7 +1,7 @@
 <template>
   <router-layout>
     <header slot="header">
-      <base-header title="首页" />
+      <base-header :title="$t('tabbar[0]')" />
     </header>
 
     <section class="banner">

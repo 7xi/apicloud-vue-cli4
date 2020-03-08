@@ -5,6 +5,7 @@ import store from './store';
 import RouteTransition from '@/components/vue-route-transition';
 import Vant from 'vant';
 import VueLazyLoad from 'vue-lazyload';
+import i18n from './i18n'; //国际化
 import '@/components/SvgIcons/index.ts';
 import '@/assets/styles/reset.less';
 import 'vant/lib/index.css';
@@ -29,6 +30,7 @@ if (Vue.prototype.appGlobal) {
     new Vue({
       router,
       store,
+      i18n,
       render: h => h(App),
     }).$mount('#app');
   };
@@ -36,6 +38,7 @@ if (Vue.prototype.appGlobal) {
   new Vue({
     router,
     store,
+    i18n,
     render: h => h(App),
   }).$mount('#app');
 }

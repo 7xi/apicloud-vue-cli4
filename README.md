@@ -36,8 +36,10 @@ yarn run lint
 ├─public
 │  └─res  //这个必须留着，不然安卓无法上架
 └─src
+    ├─i18n //国际化
     ├─api  //api接口
     ├─assets
+    │  ├─language //语言包
     │  ├─images
     │  │  └─svg  //svg图标目录
     │  └─styles  //css样式
@@ -55,6 +57,10 @@ yarn run lint
     ├─store //vuex
     └─util  //工具函数
 ```
+
+### ------2020-03-08 升级------
+#### 1.升级依赖模块
+#### 2.增加国际化支持
 
 ### **项目介绍**
 #### **1.技术栈**

@@ -1,20 +1,19 @@
 <template>
   <van-tabbar :fixed="false" v-model="active" active-color="#1C1C1C">
     <van-tabbar-item icon="home-o" to="/">
-      <span>首页</span>
-      <span class="icon icon-acitityLabel"></span>
+      <span v-text="$t('tabbar[0]')"></span>
     </van-tabbar-item>
 
     <van-tabbar-item icon="todo-list-o" to="/News">
-      <span>新闻</span>
+      <span v-text="$t('tabbar[1]')"></span>
     </van-tabbar-item>
 
     <van-tabbar-item icon="apps-o" to="/Products">
-      <span>产品</span>
+      <span v-text="$t('tabbar[2]')"></span>
     </van-tabbar-item>
 
     <van-tabbar-item icon="friends-o" to="/Member">
-      <span>我的</span>
+      <span v-text="$t('tabbar[3]')"></span>
     </van-tabbar-item>
   </van-tabbar>
 </template>

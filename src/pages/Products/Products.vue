@@ -1,7 +1,7 @@
 <template>
   <router-layout>
     <header slot="header">
-      <base-header title="产品" />
+      <base-header :title="$t('tabbar[2]')" />
     </header>
 
     <template v-if="skeletonShow">
