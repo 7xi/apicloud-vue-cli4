@@ -5,6 +5,7 @@
  * @Last Modified time: 2019-11-25 15:15:27
  */
 //
+import Vue from 'vue';
 
 /**
  *
@@ -53,22 +54,45 @@ export function phoneNumCheck(mobile: any): boolean {
 }
 
 // 设置localStorage
-export function setStorage(name: string, content: any) {
-  if (!name) return;
-  if (typeof content !== 'string') {
-    content = JSON.stringify(content);
+export function setLocalStorage(key: string, value: any) {
+  if (!key) return;
+  if (typeof value !== 'string') {
+    value = JSON.stringify(value);
   }
-  window.localStorage.setItem(name, content);
+  if (Vue.prototype.appGlobal) {
+    api.setPrefs({
+      key: key,
+      value: value
+    });
+  } else {
+    window.localStorage.setItem(key, value);
+  }
 }
 
 // 获取localStorage
-export function getStorage(name: any) {
-  if (!name) return;
-  return window.localStorage.getItem(name);
+export function getLocalStorage(key: any): any {
+  if (!key) return;
+  if (Vue.prototype.appGlobal) {
+    let val = api.getPrefs({
+      sync: true,
+      key: key
+    });
+    return val
+  } else {
+    let val = window.localStorage.getItem(key);
+    return val
+  }
 }
 
 // 删除localStorage
-export function removeStorage(name: any): void {
-  if (!name) return;
-  window.localStorage.removeItem(name);
+export function removeLocalStorage(key: any): void {
+  if (!key) return;
+  if (Vue.prototype.appGlobal) {
+    api.removePrefs({
+      key: key
+    });
+  } else {
+    window.localStorage.removeItem(key);
+  }
+
 }

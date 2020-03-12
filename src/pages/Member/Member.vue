@@ -35,10 +35,11 @@
 </template>
 
 <script lang="ts">
+const merge = require('webpack-merge');
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import BaseHeader from '@/pages/components/BaseHeader.vue';
-const merge = require('webpack-merge');
 import { reqNews } from '@/api/api';
+import { setLocalStorage, getLocalStorage } from '@/util/util';
 @Component({
   name: 'Member',
   components: {
@@ -57,10 +58,10 @@ export default class Member extends Vue {
 
   // 切换语言
   private async switchLanguage(e: any) {
-    let lang: any = localStorage.getItem('language') ? localStorage.getItem('language') : 'zh_cn';
+    let lang: any = getLocalStorage('language') ? getLocalStorage('language') : 'zh_cn';
     lang = lang === 'zh_cn' ? 'en_us' : 'zh_cn';
     this.$i18n.locale = lang;
-    localStorage.setItem('language', lang);
+    setLocalStorage('language', lang);
   }
 
   private async mounted() {

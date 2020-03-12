@@ -19,6 +19,10 @@
     <access origin="*" />
 
     <preference name="pageBounce" value="false"/>
+	
+	<preference name="useWKWebView" value="true" />
+
+	<preference name="interfaceStyle" value="Automatic"/>
 
 	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
 

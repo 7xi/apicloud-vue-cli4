@@ -18,11 +18,9 @@ Vue.prototype.appGlobal = false;
 
 Vue.use(Vant);
 Vue.use(RouteTransition);
-Vue.use(VueLazyLoad);
-// {
-//   error:require("./statics/site/imgs/erro.jpg"),
-//   loading:require("./statics/site/imgs/load.gif")
-// }
+Vue.use(VueLazyLoad, {
+  error: require("./assets/images/ico/error.png")
+});
 
 if (Vue.prototype.appGlobal) {
   // @ts-ignore
