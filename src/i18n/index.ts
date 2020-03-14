@@ -5,10 +5,10 @@ Vue.use(VueI18n)
 
 // 注册i18n实例并引入语言文件
 const i18n = new VueI18n({
-    locale: 'zh_cn',
+    locale: 'zh_CN',
     messages: {
-        'zh_cn': require('@/assets/languages/zh_cn.json'),
-        'en_us': require('@/assets/languages/en_us.json')
+        'zh_CN': require('@/assets/languages/zh_cn.json'),
+        'en_US': require('@/assets/languages/en_us.json')
     }
 })
 

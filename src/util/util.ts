@@ -1,8 +1,8 @@
 /*
  * @Author: 琪琪格
  * @Date: 2019-11-25 12:53:08
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2019-11-25 15:15:27
+ * @Last Modified by: 7xi
+ * @Last Modified time: 2020-03-14 16:00:08
  */
 //
 import Vue from 'vue';
@@ -53,7 +53,13 @@ export function phoneNumCheck(mobile: any): boolean {
   }
 }
 
-// 设置localStorage
+/**
+ *
+ * 本地存储数据
+ * @export
+ * @param {string} key - 要存的对象名称
+ * @param {any} value - 要存的对象内容(存到本地时如果不是字符串类型会转成字符串类型)
+ */
 export function setLocalStorage(key: string, value: any) {
   if (!key) return;
   if (typeof value !== 'string') {
@@ -62,37 +68,120 @@ export function setLocalStorage(key: string, value: any) {
   if (Vue.prototype.appGlobal) {
     api.setPrefs({
       key: key,
-      value: value
+      value: value,
     });
   } else {
     window.localStorage.setItem(key, value);
   }
 }
 
-// 获取localStorage
+/**
+ *
+ * 获取本地数据
+ * @export
+ * @param {string} key - 要获取的对象名称
+ * @returns {boolean} - 返回获取到的结果
+ */
 export function getLocalStorage(key: any): any {
   if (!key) return;
   if (Vue.prototype.appGlobal) {
     let val = api.getPrefs({
       sync: true,
-      key: key
+      key: key,
     });
-    return val
+    return val;
   } else {
     let val = window.localStorage.getItem(key);
-    return val
+    return val;
   }
 }
 
-// 删除localStorage
-export function removeLocalStorage(key: any): void {
+/**
+ *
+ * 删除本地数据
+ * @export
+ * @param {string} key - 要删除的对象名称
+ *  * @param {string} key - 要删除的对象名称
+ */
+export function removeLocalStorage(key: any) {
   if (!key) return;
   if (Vue.prototype.appGlobal) {
     api.removePrefs({
-      key: key
+      key: key,
     });
   } else {
     window.localStorage.removeItem(key);
   }
+}
 
+/**
+ *
+ * 获取系统权限
+ * @export
+ * @param {string} key - 要获取的系统类型名称
+ * @callback {boolean} - 返回获取到的结果
+ */
+export function getHasPermission(key: string, callback: any): any {
+  // 系统权限对照表
+  const codeList: { [key: string]: string } = {
+    camera: '相机',
+    contacts: '联系人读取',
+    'contacts-r': '仅联系人读取',
+    'contacts-w': '仅联系人写入',
+    microphone: '麦克风',
+    photos: '访问相册',
+    location: '定位',
+    locationAlways: '后台定位',
+    notification: '状态栏通知',
+    calendar: '日历读取/写入',
+    'calendar-r': '仅日历读取',
+    'calendar-w': '仅日历写入',
+    phone: '拨打电话',
+    'phone-call': '仅直接拨打电话',
+    'phone-r': '仅获取手机号码',
+    'phone-r-log': '读取通话记录',
+    'phone-w-log': '写入通话记录',
+    sensor: '传感器',
+    sms: '读取短信/后台发送短信',
+    'sms-s': '仅后台发送短信',
+    'sms-r': '仅读取短信',
+    storage: '读写',
+    'storage-r': '写入',
+    'storage-w': '读取',
+  };
+  // 当前要获取的权限类型
+  let list: string[] = [];
+  list.push(key);
+  // 获取是否有权限
+  let result = api.hasPermission({
+    list: list,
+  });
+  let name = codeList[result[0].name];
+  // 如果有权限就返回,没有权限就继续申请权限
+  if (result[0].granted) {
+    callback(true);
+  } else {
+    api.confirm(
+      {
+        title: '提醒',
+        msg: `没有获得 ${name} 权限\n是否前往设置？`,
+        buttons: ['去设置', '取消']
+      },
+      function(ret: any) {
+        if (1 === ret.buttonIndex) {
+          api.requestPermission(
+            {
+              list: list,
+              code: 100001,
+            },
+            function(ret: any) {
+              callback(ret.list[0].granted);
+            }
+          );
+        } else {
+          callback(false);
+        }
+      }
+    );
+  }
 }

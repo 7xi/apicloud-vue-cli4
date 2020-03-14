@@ -36,6 +36,9 @@
 
 <script lang="ts">
 const merge = require('webpack-merge');
+import { Locale } from 'vant';
+import enUS from '@/assets/languages/vant/en-US';
+import zhCN from '@/assets/languages/vant/zh-CN';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import BaseHeader from '@/pages/components/BaseHeader.vue';
 import { reqNews } from '@/api/api';
@@ -58,10 +61,23 @@ export default class Member extends Vue {
 
   // 切换语言
   private async switchLanguage(e: any) {
-    let lang: any = getLocalStorage('language') ? getLocalStorage('language') : 'zh_cn';
-    lang = lang === 'zh_cn' ? 'en_us' : 'zh_cn';
+    let lang: string = '';
+    if (getLocalStorage('language')) {
+      if (getLocalStorage('language') === 'zh_CN') {
+        lang = 'en-US';
+        Locale.use('en-US', enUS);
+      } else {
+        lang = 'zh_CN';
+        Locale.use('zh_CN', zhCN);
+      }
+    } else {
+      lang = 'zh_CN';
+    }
     this.$i18n.locale = lang;
     setLocalStorage('language', lang);
+    this.$dialog.alert({
+      message: lang === 'zh_CN' ? '完成' : 'ok',
+    });
   }
 
   private async mounted() {
