@@ -6,7 +6,14 @@ import router from '@/router';
 
 // 环境的切换
 if (process.env.NODE_ENV == 'development') {
-  axios.defaults.baseURL = 'https://www.fastmock.site/mock/6d41e4a585f6e3529e633c2d4e78cbba/api';
+  // 开发模式下判断
+  // appGlobal === true 需要显示全部路径，不然在apicloud中调试会请求失败
+
+  if(Vue.prototype.appGlobal){
+    axios.defaults.baseURL = 'https://www.fastmock.site/mock/6d41e4a585f6e3529e633c2d4e78cbba/api';
+  }else{
+    axios.defaults.baseURL = '/api';
+  }
 } else if (process.env.NODE_ENV == 'debug') {
   axios.defaults.baseURL = 'https://www.fastmock.site/mock/6d41e4a585f6e3529e633c2d4e78cbba/api';
 } else if (process.env.NODE_ENV == 'production') {

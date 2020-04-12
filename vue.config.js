@@ -76,11 +76,11 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'https://www.fastmock.site/mock/6d41e4a585f6e3529e633c2d4e78cbba/',
+        target: 'https://www.fastmock.site/mock/6d41e4a585f6e3529e633c2d4e78cbba',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/',
+          '^/api': '',
         },
       },
     },

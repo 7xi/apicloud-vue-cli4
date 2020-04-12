@@ -19,7 +19,7 @@ Vue.prototype.appGlobal = false;
 Vue.use(Vant);
 Vue.use(RouteTransition);
 Vue.use(VueLazyLoad, {
-  error: require("./assets/images/ico/error.png")
+  error: require('./assets/images/ico/error.png'),
 });
 
 if (Vue.prototype.appGlobal) {

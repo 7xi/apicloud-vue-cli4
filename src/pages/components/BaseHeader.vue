@@ -8,7 +8,7 @@
       :left-arrow="leftArrow"
       :border="border"
       :z-index="Zindex"
-      @click-left="handelLeft"
+      @click-left="goBack"
     >
       <template v-if="slotLeft">
         <div slot="left">
@@ -55,7 +55,7 @@ export default class extends Vue {
 
   @Getter('appConfig') private getterAppConfig: any;
 
-  private async handelLeft() {
+  private async goBack() {
     this.$router.go(-1);
   }
 }
@@ -63,11 +63,14 @@ export default class extends Vue {
 
 <style lang="less" scoped>
 .van-nav-bar {
-  .van-icon {
-    color: #323233;
+  /deep/.van-icon {
+    color: #333333;
   }
-  .van-nav-bar__text {
-    color: #323233;
+  /deep/.van-nav-bar__text {
+    color: #333333;
+  }
+  /deep/.van-nav-bar__left, .van-nav-bar__right {
+    top: auto;
   }
 }
 </style>
