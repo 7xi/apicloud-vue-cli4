@@ -57,6 +57,34 @@ yarn run lint
     ├─store //vuex
     └─util  //工具函数
 ```
+
+### ------2020-04-12 升级------
+#### 1.更新部分模块
+#### 2.修复语言切换错误
+#### 3.更新部分模块
+#### 4.增加拍照演示
+#### 5.增加app下真机同步方法，步骤如下：
+
+ - 5.1将apicloud项目根目录下的app.json文件打开（如果没这个文件，可以先给项目介绍的步骤过一遍），修改url地址为http地址，例如酱紫
+```
+{
+    "name": "root",
+    "url": "http://192.168.1.100:8080/#/",
+    "bgColor": "#fff",
+    "title": "首页",
+    "hideNavigationBar": true
+}
+```
+ - 5.2修改src\main.ts中Vue.prototype.appGlobal状态改为true
+ - 5.3在src\util\http.ts文件中可以看到这一段代码，根据自己的实际情况修改，这段代码的含义是如果是apicloud模式，就使用全路径访问，因为apicloud模式下请求使用的是api.ajax方法，没法使用代理访问，这个请求方法不需要考虑跨域问题，所以需要参照如下写法给完全路径补上 感谢QQ @我命由我不由天给 的建议：
+```
+  if(Vue.prototype.appGlobal){
+    axios.defaults.baseURL = 'https://www.fastmock.site/mock/6d41e4a585f6e3529e633c2d4e78cbba/api';
+  }else{
+    axios.defaults.baseURL = '/api';
+  }
+```
+
 ### ------2020-03-14 升级------
 #### 1.增加vant语言包
 #### 2.增加获取系统权限方法

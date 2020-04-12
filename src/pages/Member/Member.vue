@@ -30,6 +30,20 @@
           <van-button plain type="primary" @click="switchLanguage">切换语言</van-button>
         </section>
       </van-tab>
+      <van-tab :title="$t('tabsMenu[4]')">
+        <section class="content flex-xy-center">
+          <div class="box">
+            <div style="margin-bottom:40px">
+              <template v-if="base64Img">
+                <van-image width="100" height="100" :src="base64Img" />
+              </template>
+            </div>
+            <div class="flex-xy-center">
+              <van-button plain type="primary" @click="photograph">拍照演示</van-button>
+            </div>
+          </div>
+        </section>
+      </van-tab>
     </van-tabs>
   </router-layout>
 </template>
@@ -51,6 +65,35 @@ import { setLocalStorage, getLocalStorage } from '@/util/util';
 })
 export default class Member extends Vue {
   private active: number = 0;
+  private base64Img: string = '';
+
+  private async photograph() {
+    const that = this;
+    if (Vue.prototype.appGlobal) {
+      api.getPicture(
+        {
+          sourceType: 'camera',
+          encodingType: 'jpg',
+          mediaValue: 'pic',
+          destinationType: 'base64',
+          allowEdit: true,
+          quality: 50,
+          targetWidth: 100,
+          targetHeight: 100,
+          saveToPhotoAlbum: false,
+        },
+        function(ret: any) {
+          if (ret) {
+            that.base64Img = ret.base64Data;
+          } else {
+            that.$toast('不拍啦');
+          }
+        }
+      );
+    } else {
+      this.$toast('请在apicloud中测试该功能');
+    }
+  }
 
   // 动态修改参数
   private async changeActive(e: any) {
@@ -64,8 +107,8 @@ export default class Member extends Vue {
     let lang: string = '';
     if (getLocalStorage('language')) {
       if (getLocalStorage('language') === 'zh_CN') {
-        lang = 'en-US';
-        Locale.use('en-US', enUS);
+        lang = 'en_US';
+        Locale.use('en_US', enUS);
       } else {
         lang = 'zh_CN';
         Locale.use('zh_CN', zhCN);
