@@ -165,7 +165,7 @@ export function getHasPermission(key: string, callback: any): any {
       {
         title: '提醒',
         msg: `没有获得 ${name} 权限\n是否前往设置？`,
-        buttons: ['去设置', '取消']
+        buttons: ['去设置', '取消'],
       },
       function(ret: any) {
         if (1 === ret.buttonIndex) {

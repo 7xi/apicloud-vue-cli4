@@ -56,7 +56,7 @@ import zhCN from '@/assets/languages/vant/zh-CN';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import BaseHeader from '@/pages/components/BaseHeader.vue';
 import { reqNews } from '@/api/api';
-import { setLocalStorage, getLocalStorage } from '@/util/util';
+import { setLocalStorage, getLocalStorage, getHasPermission } from '@/util/util';
 @Component({
   name: 'Member',
   components: {
@@ -67,29 +67,66 @@ export default class Member extends Vue {
   private active: number = 0;
   private base64Img: string = '';
 
+  // 测试使用apicloud的api获取图片
   private async photograph() {
     const that = this;
     if (Vue.prototype.appGlobal) {
-      api.getPicture(
-        {
-          sourceType: 'camera',
-          encodingType: 'jpg',
-          mediaValue: 'pic',
-          destinationType: 'base64',
-          allowEdit: true,
-          quality: 50,
-          targetWidth: 100,
-          targetHeight: 100,
-          saveToPhotoAlbum: false,
-        },
-        function(ret: any) {
+      // 演示获取摄像头权限
+      let camera = new Promise((resolve, reject) => {
+        getHasPermission('camera', function(ret: any) {
           if (ret) {
-            that.base64Img = ret.base64Data;
+            resolve(ret);
           } else {
-            that.$toast('不拍啦');
+            reject(ret);
           }
-        }
-      );
+        });
+      });
+
+      // 演示获取相册权限
+      let photos = new Promise((resolve, reject) => {
+        getHasPermission('photos', function(ret: any) {
+          if (ret) {
+            resolve(ret);
+          } else {
+            reject(ret);
+          }
+        });
+      });
+
+      Promise.all([camera, photos])
+        .then(result => {
+          if (!result[0]) {
+            that.$toast('获取不到摄像头权限');
+            return;
+          }
+          if (!result[1]) {
+            that.$toast('获取不到相册权限');
+            return;
+          }
+          api.getPicture(
+            {
+              sourceType: 'camera',
+              encodingType: 'jpg',
+              mediaValue: 'pic',
+              destinationType: 'base64',
+              allowEdit: true,
+              quality: 50,
+              targetWidth: 100,
+              targetHeight: 100,
+              saveToPhotoAlbum: false,
+            },
+            function(ret: any) {
+              if (ret) {
+                that.base64Img = ret.base64Data;
+              } else {
+                that.$toast('不拍啦');
+              }
+            }
+          );
+        })
+        .catch(error => {
+          console.log(error);
+        });
     } else {
       this.$toast('请在apicloud中测试该功能');
     }
