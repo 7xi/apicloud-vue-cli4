@@ -61,6 +61,8 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  // mode: 'history', //开启HTML5 History 模式
+  base: '/app', //设置路由根路径为mobile
   routes,
 });
 

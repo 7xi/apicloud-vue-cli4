@@ -114,7 +114,7 @@ export default class vueRouteTransition extends Vue {
   }
 }
 </script>
-<style lang="less">
+<style lang="scss">
 html,
 body {
   width: 100%;

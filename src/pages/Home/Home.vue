@@ -34,10 +34,15 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import BaseHeader from '@/pages/components/BaseHeader.vue';
 import { reqBanner } from '@/api/api';
+import { Swipe, SwipeItem, Cell, CellGroup } from 'vant';
 @Component({
   name: 'Home',
   components: {
     BaseHeader,
+    [Swipe.name]: Swipe,
+    [SwipeItem.name]: SwipeItem,
+    [Cell.name]: Cell,
+    [CellGroup.name]: CellGroup,
   },
 })
 export default class Home extends Vue {
@@ -107,12 +112,12 @@ export default class Home extends Vue {
 
   private async mounted() {
     this.init();
-    if (Vue.prototype.appGlobal) this.getAPPInfo();
+    if (this.$appMode) this.getAPPInfo();
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .banner {
   height: 200px;
   background: #f6f6f6;

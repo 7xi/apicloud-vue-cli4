@@ -20,12 +20,16 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import BaseHeader from '@/pages/components/BaseHeader.vue';
 import BaseSkeleton from '@/pages/components/BaseSkeleton.vue';
+import { List, Cell, CellGroup } from 'vant';
 import { reqNews } from '@/api/api';
 @Component({
   name: 'News',
   components: {
     BaseHeader,
     BaseSkeleton,
+    [List.name]: List,
+    [Cell.name]: Cell,
+    [CellGroup.name]: CellGroup,
   },
 })
 export default class News extends Vue {

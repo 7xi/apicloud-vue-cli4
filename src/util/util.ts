@@ -1,12 +1,11 @@
 /*
  * @Author: 琪琪格
  * @Date: 2019-11-25 12:53:08
- * @Last Modified by: 7xi
- * @Last Modified time: 2020-03-14 16:00:08
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2020-04-22 13:59:32
  */
 //
-import Vue from 'vue';
-
+import config from '@/util/config';
 /**
  *
  * 手机号码加星号
@@ -65,7 +64,7 @@ export function setLocalStorage(key: string, value: any) {
   if (typeof value !== 'string') {
     value = JSON.stringify(value);
   }
-  if (Vue.prototype.appGlobal) {
+  if (config.$appMode) {
     api.setPrefs({
       key: key,
       value: value,
@@ -84,7 +83,7 @@ export function setLocalStorage(key: string, value: any) {
  */
 export function getLocalStorage(key: any): any {
   if (!key) return;
-  if (Vue.prototype.appGlobal) {
+  if (config.$appMode) {
     let val = api.getPrefs({
       sync: true,
       key: key,
@@ -105,7 +104,7 @@ export function getLocalStorage(key: any): any {
  */
 export function removeLocalStorage(key: any) {
   if (!key) return;
-  if (Vue.prototype.appGlobal) {
+  if (config.$appMode) {
     api.removePrefs({
       key: key,
     });

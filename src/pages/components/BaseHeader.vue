@@ -32,7 +32,13 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Getter } from 'vuex-class';
-@Component
+import { NavBar } from 'vant';
+
+@Component({
+  components: {
+    [NavBar.name]: NavBar,
+  },
+})
 export default class extends Vue {
   // title | 标题
   @Prop({ default: '', type: String }) private title?: string;
@@ -61,7 +67,7 @@ export default class extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .van-nav-bar {
   /deep/.van-icon {
     color: #333333;
@@ -69,7 +75,8 @@ export default class extends Vue {
   /deep/.van-nav-bar__text {
     color: #333333;
   }
-  /deep/.van-nav-bar__left, .van-nav-bar__right {
+  /deep/.van-nav-bar__left,
+  .van-nav-bar__right {
     top: auto;
   }
 }

@@ -6,11 +6,88 @@
     <meta name="viewport"
         content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width,viewport-fit=cover" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <meta base ="/app/">
     <title>apicloud</title>
+
 </head>
 
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <!-- 内容部分为首屏加载动画 -->
+        <style>
+            .spinner {
+                margin: 100px auto;
+                width: 50px;
+                height: 60px;
+                text-align: center;
+                font-size: 10px;
+            }
+
+            .spinner>i {
+                background-color: #FE3C71;
+                height: 100%;
+                width: 6px;
+                display: inline-block;
+                -webkit-animation: stretchDelay 1.2s infinite ease-in-out;
+                animation: stretchDelay 1.2s infinite ease-in-out;
+            }
+
+            .spinner .rect2 {
+                -webkit-animation-delay: -1.1s;
+                animation-delay: -1.1s;
+            }
+
+            .spinner .rect3 {
+                -webkit-animation-delay: -1.0s;
+                animation-delay: -1.0s;
+            }
+
+            .spinner .rect4 {
+                -webkit-animation-delay: -0.9s;
+                animation-delay: -0.9s;
+            }
+
+            .spinner .rect5 {
+                -webkit-animation-delay: -0.8s;
+                animation-delay: -0.8s;
+            }
+
+            @-webkit-keyframes stretchDelay {
+
+                0%,
+                40%,
+                100% {
+                    -webkit-transform: scaleY(0.4)
+                }
+
+                20% {
+                    -webkit-transform: scaleY(1.0)
+                }
+            }
+
+            @keyframes stretchDelay {
+
+                0%,
+                40%,
+                100% {
+                    transform: scaleY(0.4);
+                    -webkit-transform: scaleY(0.4);
+                }
+
+                20% {
+                    transform: scaleY(1.0);
+                    -webkit-transform: scaleY(1.0);
+                }
+            }
+        </style>
+        <div class="spinner">
+            <i class="rect1"></i>
+            <i class="rect2"></i>
+            <i class="rect3"></i>
+            <i class="rect4"></i>
+            <i class="rect5"></i>
+        </div>
+    </div>
 </body>
 
 </html>

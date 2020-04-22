@@ -1,15 +1,4 @@
 {
-    "tabbar": [
-        "home",
-        "news",
-        "product",
-        "mine"
-    ],
-    "tabsMenu": [
-        "svg-sprite",
-        "switch",
-        "about",
-        "language",
-        "photograph"
-    ]
+  "tabbar": ["home", "news", "product", "mine"],
+  "tabsMenu": ["svg-sprite", "switch", "about", "language", "photograph"]
 }

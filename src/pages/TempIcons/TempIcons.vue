@@ -47,7 +47,7 @@ export default class TempIcons extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .list {
   border-left: 2px solid #f3f3f3;
 }

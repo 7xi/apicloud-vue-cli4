@@ -1,0 +1,5 @@
+@mixin content($padding, $fontSize: 14px) {
+  height: 200px;
+  padding: $padding;
+  font-size: $fontSize;
+}

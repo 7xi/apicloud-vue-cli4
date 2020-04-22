@@ -24,12 +24,17 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import BaseHeader from '@/pages/components/BaseHeader.vue';
 import BaseSkeleton from '@/pages/components/BaseSkeleton.vue';
+import { List, Cell, CellGroup, Image } from 'vant';
 import { reqProduct } from '@/api/api';
 @Component({
   name: 'Products',
   components: {
     BaseHeader,
     BaseSkeleton,
+    [List.name]: List,
+    [Cell.name]: Cell,
+    [CellGroup.name]: CellGroup,
+    [Image.name]: Image,
   },
 })
 export default class Products extends Vue {
@@ -67,7 +72,7 @@ export default class Products extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .van-image {
   margin-right: 10px;
 }

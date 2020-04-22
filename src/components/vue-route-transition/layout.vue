@@ -23,7 +23,7 @@ export default class routerLayout extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 body,
 html {
   height: 100%;

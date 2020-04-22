@@ -20,7 +20,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-@Component
+import { Tabbar, TabbarItem } from 'vant';
+@Component({
+  components: {
+    [Tabbar.name]: Tabbar,
+    [TabbarItem.name]: TabbarItem,
+  },
+})
 export default class extends Vue {
   private active: number = 0;
 

@@ -35,7 +35,7 @@ export default class extends Vue {
   }
 
   private async created() {
-    if (Vue.prototype.appGlobal) {
+    if (this.$appMode) {
       this.setBarStyle();
       this.setSafeArea();
     }
@@ -43,7 +43,7 @@ export default class extends Vue {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 /*横向弹性盒子*/
 
 .flex-box-x {

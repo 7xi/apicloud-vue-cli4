@@ -3,8 +3,6 @@
     <header slot="header">
       <base-header :title="$t('tabbar[3]')" :border="false" />
     </header>
-    <main class="flex-xy-center"></main>
-
     <van-tabs v-model="active" color="#07c160" @click="changeActive">
       <van-tab :title="$t('tabsMenu[0]')">
         <section class="content flex-xy-center">
@@ -12,151 +10,57 @@
         </section>
       </van-tab>
       <van-tab :title="$t('tabsMenu[1]')">
-        <section class="content">
-          <div class="tip">TAB解决方案，动态修改url地址query参数</div>
-          <h5>1.tab切换事件中加入修改参数</h5>
-          <p>this.$router.push({ query:merge(this.$route.query,{active:动态传入的值}) })</p>
-          <h5>2.如何新增一个参数</h5>
-          <p>this.$router.push({ query:merge(this.$route.query,{addParams:'我是新增的一个参数'}) })</p>
-          <h5>3.如何替换所有参数</h5>
-          <p>this.$router.push({ query:merge({},{maxPrice:'我把所有参数都替换了'}) })</p>
-        </section>
+        <tabs-item1 />
       </van-tab>
       <van-tab :title="$t('tabsMenu[2]')">
         <section class="content flex-xy-center">一个勉强可以写app的脚手架</section>
       </van-tab>
       <van-tab :title="$t('tabsMenu[3]')">
         <section class="content flex-xy-center">
-          <van-button plain type="primary" @click="switchLanguage">切换语言</van-button>
+          <tabs-item3 />
         </section>
       </van-tab>
       <van-tab :title="$t('tabsMenu[4]')">
-        <section class="content flex-xy-center">
-          <div class="box">
-            <div style="margin-bottom:40px">
-              <template v-if="base64Img">
-                <van-image width="100" height="100" :src="base64Img" />
-              </template>
-            </div>
-            <div class="flex-xy-center">
-              <van-button plain type="primary" @click="photograph">拍照演示</van-button>
-            </div>
-          </div>
-        </section>
+        <tabs-item4 />
+      </van-tab>
+      <van-tab title="vuex">
+        <tabs-item5 />
       </van-tab>
     </van-tabs>
   </router-layout>
 </template>
 
 <script lang="ts">
-const merge = require('webpack-merge');
-import { Locale } from 'vant';
-import enUS from '@/assets/languages/vant/en-US';
-import zhCN from '@/assets/languages/vant/zh-CN';
 import { Component, Prop, Vue } from 'vue-property-decorator';
+const merge = require('webpack-merge');
 import BaseHeader from '@/pages/components/BaseHeader.vue';
-import { reqNews } from '@/api/api';
+import { Tab, Tabs, Button } from 'vant';
+import TabsItem1 from './components/TabsItem1.vue';
+import TabsItem3 from './components/TabsItem3.vue';
+import TabsItem4 from './components/TabsItem4.vue';
+import TabsItem5 from './components/TabsItem5.vue';
 import { setLocalStorage, getLocalStorage, getHasPermission } from '@/util/util';
 @Component({
   name: 'Member',
   components: {
+    [Tab.name]: Tab,
+    [Tabs.name]: Tabs,
+    [Button.name]: Button,
     BaseHeader,
+    TabsItem1,
+    TabsItem3,
+    TabsItem4,
+    TabsItem5,
   },
 })
 export default class Member extends Vue {
   private active: number = 0;
-  private base64Img: string = '';
-
-  // 测试使用apicloud的api获取图片
-  private async photograph() {
-    const that = this;
-    if (Vue.prototype.appGlobal) {
-      // 演示获取摄像头权限
-      let camera = new Promise((resolve, reject) => {
-        getHasPermission('camera', function(ret: any) {
-          if (ret) {
-            resolve(ret);
-          } else {
-            reject(ret);
-          }
-        });
-      });
-
-      // 演示获取相册权限
-      let photos = new Promise((resolve, reject) => {
-        getHasPermission('photos', function(ret: any) {
-          if (ret) {
-            resolve(ret);
-          } else {
-            reject(ret);
-          }
-        });
-      });
-
-      Promise.all([camera, photos])
-        .then(result => {
-          if (!result[0]) {
-            that.$toast('获取不到摄像头权限');
-            return;
-          }
-          if (!result[1]) {
-            that.$toast('获取不到相册权限');
-            return;
-          }
-          api.getPicture(
-            {
-              sourceType: 'camera',
-              encodingType: 'jpg',
-              mediaValue: 'pic',
-              destinationType: 'base64',
-              allowEdit: true,
-              quality: 50,
-              targetWidth: 100,
-              targetHeight: 100,
-              saveToPhotoAlbum: false,
-            },
-            function(ret: any) {
-              if (ret) {
-                that.base64Img = ret.base64Data;
-              } else {
-                that.$toast('不拍啦');
-              }
-            }
-          );
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    } else {
-      this.$toast('请在apicloud中测试该功能');
-    }
-  }
 
   // 动态修改参数
   private async changeActive(e: any) {
+    if (e === this.active) return;
     this.$router.push({
       query: merge(this.$route.query, { active: e }),
-    });
-  }
-
-  // 切换语言
-  private async switchLanguage(e: any) {
-    let lang: string = '';
-    if (getLocalStorage('language')) {
-      if (getLocalStorage('language') === 'zh_CN') {
-        lang = 'en_US';
-        Locale.use('en_US', enUS);
-      } else {
-        lang = 'zh_CN';
-        Locale.use('zh_CN', zhCN);
-      }
-    } else {
-      lang = 'zh_CN';
-    }
-    this.$i18n.locale = lang;
-    setLocalStorage('language', lang);
-    this.$dialog.alert({
-      message: lang === 'zh_CN' ? '完成' : 'ok',
     });
   }
 
@@ -167,7 +71,7 @@ export default class Member extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .content {
   height: 200px;
   padding: 30px;

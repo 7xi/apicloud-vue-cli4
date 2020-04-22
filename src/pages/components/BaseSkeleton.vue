@@ -6,9 +6,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-
-@Component
-export default class Skeleton extends Vue {
+import { Skeleton } from 'vant';
+@Component({
+  components: {
+    [Skeleton.name]: Skeleton,
+  },
+})
+export default class extends Vue {
   // 骨架图头像占位图类型 | 默认无头像 | true | false
   @Prop({ default: false, type: Boolean }) private SkeletonType?: boolean;
   // 骨架图头像占位图形状 | 默认头像类型 | round | square

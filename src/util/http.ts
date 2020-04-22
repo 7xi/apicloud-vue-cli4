@@ -1,23 +1,20 @@
-// 引入 axios
-import Vue from 'vue';
 import axios from 'axios';
 const Qs = require('qs');
 import router from '@/router';
-
+import config from '@/util/config';
 // 环境的切换
 if (process.env.NODE_ENV == 'development') {
   // 开发模式下判断
-  // appGlobal === true 需要显示全部路径，不然在apicloud中调试会请求失败
-
-  if(Vue.prototype.appGlobal){
-    axios.defaults.baseURL = 'https://www.fastmock.site/mock/6d41e4a585f6e3529e633c2d4e78cbba/api';
-  }else{
+  // config.$appMode === true 需要显示全部路径，不然在apicloud中调试会请求失败
+  if (config.$appMode) {
+    axios.defaults.baseURL = `${config.$baseUrl}/api`;
+  } else {
     axios.defaults.baseURL = '/api';
   }
 } else if (process.env.NODE_ENV == 'debug') {
-  axios.defaults.baseURL = 'https://www.fastmock.site/mock/6d41e4a585f6e3529e633c2d4e78cbba/api';
+  axios.defaults.baseURL = `${config.$baseUrl}/api`;
 } else if (process.env.NODE_ENV == 'production') {
-  axios.defaults.baseURL = 'https://www.fastmock.site/mock/6d41e4a585f6e3529e633c2d4e78cbba/api';
+  axios.defaults.baseURL = `${config.$baseUrl}/api`;
 }
 
 // 超时时间
@@ -89,14 +86,15 @@ axios.interceptors.response.use(
  * @param {String} url [请求的url地址]
  * @param {Object} params [请求时携带的参数]
  */
-export function get(url: string, params: object, files?: object) {
+export function get(url: string, params?: object, files?: object) {
   return new Promise((resolve, reject) => {
-    if (Vue.prototype.appGlobal) {
+    const nowUrl = axios.defaults.baseURL + url;
+    if (config.$appMode) {
       //
       // @ts-ignore
       api.ajax(
         {
-          url: url,
+          url: nowUrl,
           method: 'get',
           data: {
             values: params,
@@ -104,15 +102,15 @@ export function get(url: string, params: object, files?: object) {
         },
         function(ret: any, err: any) {
           if (ret) {
-            resolve(ret.data);
+            resolve(ret);
           } else {
-            reject(err.data);
+            reject(err);
           }
         }
       );
     } else {
       axios
-        .get(url, {
+        .get(nowUrl, {
           params: Qs.stringify(params),
         })
         .then((res: any) => {
@@ -136,7 +134,7 @@ export function get(url: string, params: object, files?: object) {
 export function post(url: string, params: object, files?: object) {
   return new Promise((resolve, reject) => {
     const nowUrl = axios.defaults.baseURL + url;
-    if (Vue.prototype.appGlobal) {
+    if (config.$appMode) {
       // @ts-ignore
       api.ajax(
         {

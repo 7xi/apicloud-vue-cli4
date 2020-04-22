@@ -10,14 +10,16 @@
 
 import Vue from 'vue';
 import router from './index';
+import config from '@/util/config';
 import { Toast } from 'vant';
+
 Vue.use(Toast);
 router.beforeEach((to: any, from: any, next: any) => {
   Toast.loading({
     message: '加载中...',
     forbidClick: true,
   });
-  if (Vue.prototype.appGlobal) {
+  if (config.$appMode) {
     // 判断是否断网
     api.addEventListener(
       {
