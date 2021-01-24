@@ -4,7 +4,7 @@ function resolve(dir) {
   return path.join(__dirname, '.', dir);
 }
 module.exports = {
-  publicPath: '/app',
+  publicPath: '',
   outputDir: 'dist',
   // 是否为生产环境构建生成 source map？
 

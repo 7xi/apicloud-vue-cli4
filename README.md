@@ -6,6 +6,7 @@ apicloud下app开发脚手架
 
 **ApiCloud 脚手架工具**, 可快速开发基于vue-cli4打包的混合app，该脚手架使用vant前端框架，在vue-cli4的基础上增加了很多apicloud的兼容方案，使用该脚手架需要有一定的apicloud开发经验和vue-cli使用经验！
 
+**该脚手架适合已有h5项目需要转aicloud的一个解决方案**
 
 ## Usage
 
@@ -203,7 +204,7 @@ npm install
 - 2.14 国际化支持，具体可以参考项目代码 
 
 ### **暂时无法解决的问题**
-- 1.在填写表单时，app的头部会被推上去
+- 1.在填写表单时，app的头部会被顶到窗口外面去
 
 - 2.一些api方法没有开启关闭，设置了以后会影响到全局页面，需要自己根据实际业务逻辑增加判断条件，例如
 ```
@@ -213,29 +214,25 @@ api.addEventListener({
     alert('应用回到后台');
 });
 ```
-- 3.IOS端返回上一页页面切换无法停留
+- 3.IOS端侧滑返回无法停留
 
 ### **开始一个app**
 以上都是废话，直接开始一个项目吧！
 
-- 1.生成apicloud项目，打开config.xml文件，复制第一行中的id值，后面会用得到这个appid值，然后删除项目中所有的文件，并且手机需要安装自定义loader;
+- 1.生成apicloud项目，记录appid，然后替换/public/config.xml文件中第一行id;
 
-- 2.将脚手架中/util/config配置文件中的$appMode改成false,然后运行npm run serve,确保项目能够运行，并且没有报错;
+- 2.将脚手架中/util/config配置文件中的$appMode改成false,可以编译h5端;
 
-- 3.将脚手架中/util/config配置文件中的$appMode改成true,运行npm run build编译代码;
+- 3.将脚手架中/util/config配置文件中的$appMode改成true,可以编译apicloud端;
 
-- 4.将编译好的代码（dist文件夹下）文件复制到apicloud项目根目录下;
+- 4.将编译好的apicloud端代码（dist文件夹下）文件复制到apicloud项目根目录下;
 
-- 5.替换config.xml配置文件中的appid为第一步保存的id;
+- 5.保证手机和电脑在同一个网络环境，然后在apicloud中同步代码，查看效果;
 
-- 6.保证手机和电脑在同一个网络环境，然后在apicloud中同步代码，查看效果;
-
-- 7.你也可以来一波骚操作，直接将该项目根目录下的app.zip文件解压到你的apicloud根目录中（需要先清空apicloud项目文件夹），然后替换config.xml配置文件中的appid为实际项目id，不然无法真机同步，这样就可以看到我的演示项目啦（ps:代码在线上，地址为：https://apicloud.somaqu.com/app/,访问可能会有卡顿，真实项目中代码是编译后放到本地的，不会出现这个问题）。
-
-- 8.h5端测试https://apicloud.somaqu.com/h5/
+- 6.h5端测试https://apicloud.somaqu.com/h5/
 
 
 ![](http://img.somaqu.com/1575602231032.gif)
 
-该脚手架已经有上架到安卓和ios的APP项目了，而且相较于官方写法，速度更快，兼容性更好，对ui的还原度支持会比较好。
+该脚手架已经有上架到安卓和ios的APP项目了，而且相较于官方写法，流畅度会比较高，不过也会有一些无法解决的坑，可根据需求来取舍。
 赶紧clone下来试一下吧，如果对你有帮助，欢迎star~；如果有疑问，可以提lssues或加我QQ 669476900一起讨论！
